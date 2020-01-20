@@ -28,7 +28,7 @@ SkillType NaoBehavior::kickBall(const int kickTypeToUse, const VecPosition &targ
 
     kickType = kickTypeToUse;
 
-    if (me.getDistanceTo(ball) > 1) {
+    if (me.getDistanceTo(ball) > 0.7) {
         // Far away from the ball so walk toward target offset from the ball
         VecPosition approachBallTarget = ball - kickDirection*atof(namedParams.find("drib_target")->second.c_str());
         return goToTarget(approachBallTarget);
@@ -260,7 +260,7 @@ SkillType NaoBehavior::kickBallAtTargetSimplePositioning(const VecPosition &targ
     }
 
     VecPosition targetLoc = worldModel->g2l(stand_pos);
-    double walkSpeed = 1;
+    double walkSpeed = 100;
 
     if (ball.getAngleBetweenPoints(stand_pos, me) >= atof(namedParams.find("kick_gen_approach_navBallAngle")->second.c_str())) { // If we're not behind the ball, consider navigating around it
         double navBallDist = atof(namedParams.find("kick_gen_approach_navBallDist")->second.c_str());
@@ -282,10 +282,10 @@ SkillType NaoBehavior::kickBallAtTargetSimplePositioning(const VecPosition &targ
 
     const double MPS_SCALE = 43.674733875; // multiply particle filter's velocity estimate by this to get m/s
     /*const*/
-    double MAX_DECEL_X = atof(namedParams.find("kick_gen_approach_maxDecelX")->second.c_str()); // m/s^2
-    const double MAX_DECEL_Y = atof(namedParams.find("kick_gen_approach_maxDecelY")->second.c_str()); //m/s^2 // TODO: The command getWalk(90, 0, 1) doesn't actually cause the robot to walk directly to the side...
-    const double MAX_VELOCITY_Y = 0.3;//core->motion_->getMaxYSpeed(); // m/s
-    const double MAX_VELOCITY_X = 0.8;//core->motion_->getMaxXSpeed(); // m/s
+    double MAX_DECEL_X = atof(namedParams.find("kick_gen_approach_maxDecelX")->second.c_str())*10; // m/s^2
+    const double MAX_DECEL_Y = atof(namedParams.find("kick_gen_approach_maxDecelY")->second.c_str())*10; //m/s^2 // TODO: The command getWalk(90, 0, 1) doesn't actually cause the robot to walk directly to the side...
+    const double MAX_VELOCITY_Y = 0.5;//core->motion_->getMaxYSpeed(); // m/s
+    const double MAX_VELOCITY_X = 1.15;//core->motion_->getMaxXSpeed(); // m/s
     /*const*/
     double BUFFER_DIST = atof(namedParams.find("kick_gen_approach_buff")->second.c_str()); // Try to stop this far behind the ball
 

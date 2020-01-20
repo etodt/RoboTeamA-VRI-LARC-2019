@@ -138,7 +138,7 @@ string rsg("rsg/agent/nao/nao.rsg");
 void ReadOptions(int argc, char* argv[])
 {
 
-    teamName = "UTAustinVilla_Base";
+    teamName = "Capivara";
     uNum = 0; // Value of 0 means choose next available number
 
     for( int i = 0; i < argc; i++)
@@ -476,12 +476,47 @@ bool GetMessage(string& msg)
 
     return true;
 }
-
+/*
+//posiveis posicoes
+goleiro
+atacante
+meia
+lateral
+volante
+zagueiro
+*/
 void Run()
 {
     Behavior *behavior;
     if (agentType == "naoagent") {
-        behavior = new NaoBehavior(teamName, uNum, namedParams, rsg);
+        switch( uNum ){
+            case 1:
+            behavior = new Goleiro(teamName, uNum, namedParams, rsg);
+            break;
+
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            behavior = new Zagueiro(teamName, uNum, namedParams, rsg);
+            break;
+
+            case 6:
+            case 7:
+            behavior = new Volante(teamName, uNum, namedParams, rsg);
+            break;
+
+            case 8:
+            case 9:
+            behavior = new Meia(teamName, uNum, namedParams, rsg);
+            break;
+
+            case 10:
+            case 11:
+            behavior = new Atacante(teamName, uNum, namedParams, rsg);
+            break;
+        }
+        //behavior = new NaoBehavior(teamName, uNum, namedParams, rsg);
     }
     else if (agentType == "pkgoalie") {
         behavior = new PKGoalieBehavior(teamName, uNum, namedParams, rsg);

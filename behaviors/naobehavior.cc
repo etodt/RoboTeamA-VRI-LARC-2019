@@ -1056,6 +1056,111 @@ bool NaoBehavior::isIndirectKick(int pm) {
     return !(pm == PM_DIRECT_FREE_KICK_LEFT || pm == PM_DIRECT_FREE_KICK_RIGHT || pm == PM_CORNER_KICK_LEFT || pm == PM_CORNER_KICK_RIGHT || pm == PM_GOAL_KICK_LEFT || pm == PM_GOAL_KICK_RIGHT);
 }
 
+// ==================================================================== //
+
+VecPosition Goleiro::defaultPosition(){
+    VecPosition target;
+    double Y; 
+
+    Y = ball.getY();
+    if (Y > 1.5)
+        Y = 1.5;
+
+    if (Y < -1.5)
+        Y = -1.5;
+
+    target = VecPosition(-HALF_FIELD_X+1,Y,0);
+
+    return( target );
+}
+void Goleiro::beam( double& beamX, double& beamY, double& beamAngle ) {
+    beamX = -HALF_FIELD_X;
+    beamY = 0;
+    beamAngle = 0;
+}
+
+// ==================================================================== //
+
+VecPosition Zagueiro::defaultPosition(){
+    VecPosition target;
+
+    if (worldModel->getUNum() <=3)
+        target = VecPosition(-HALF_FIELD_X + HALF_FIELD_X/2, ((worldModel->getUNum() % 2)*2 -1)*2, 0);
+    else
+        target = VecPosition(-HALF_FIELD_X + HALF_FIELD_X/2 + HALF_FIELD_X/6, ((worldModel->getUNum() % 2)*2 -1)*4, 0);
+
+    VecPosition myPos = worldModel->getMyPosition();
+    if (ball.getX() < 0){
+        if (ball.getX() - 1 > -HALF_FIELD_X){
+            target = VecPosition(ball.getX()-1, ((worldModel->getUNum() -2)/3 - 0.5) + ball.getY(), myPos.getAngleWithVector(ball));
+        }
+    }
+
+    return( target );
+}
+void Zagueiro::beam( double& beamX, double& beamY, double& beamAngle ) {
+    if (worldModel->getUNum() <=3){
+        beamX = -HALF_FIELD_X + HALF_FIELD_X/5;
+        beamY = ((worldModel->getUNum() % 2)*2 -1)*2;
+    } else {
+        beamX = -HALF_FIELD_X + HALF_FIELD_X/3;
+        beamY = ((worldModel->getUNum() % 2)*2 -1)*4;
+    }
+
+    beamAngle = 0;
+
+}
+
+// ==================================================================== //
+
+VecPosition Volante::defaultPosition(){
+    VecPosition target;
+
+    target = VecPosition(HALF_FIELD_X - HALF_FIELD_X/5, ((worldModel->getUNum() % 2)*2 -1)*2, 0);
+
+    return( target );
+}
+void Volante::beam( double& beamX, double& beamY, double& beamAngle ) {
+    beamX = -HALF_FIELD_X + HALF_FIELD_X/2;
+    beamY = ((worldModel->getUNum() % 2)*2 -1)*2;
+
+    beamAngle = 0;
+}
+
+
+// ==================================================================== //
+
+VecPosition Meia::defaultPosition(){
+    VecPosition target;
+
+    target = VecPosition(HALF_FIELD_X/4, ((worldModel->getUNum() % 2)*2 -1)*6, 0);
+
+    return( target );
+}
+void Meia::beam( double& beamX, double& beamY, double& beamAngle ) {
+    beamX = -HALF_FIELD_X + HALF_FIELD_X/2 + HALF_FIELD_X/6;
+    beamY = ((worldModel->getUNum() % 2)*2 -1)*6;
+
+    beamAngle = 0;
+}
+
+
+// ==================================================================== //
+VecPosition Atacante::defaultPosition(){
+    VecPosition target;
+
+    target = VecPosition(HALF_FIELD_X/2, ((worldModel->getUNum() % 2)*2 -1), 0);
+
+    return( target );
+}
+void Atacante::beam( double& beamX, double& beamY, double& beamAngle ) {
+    beamX = -HALF_FIELD_X + 3*HALF_FIELD_X/4;
+    beamY = ((worldModel->getUNum() % 2)*2 -1);
+
+    beamAngle = 0;
+}
+
+// ==================================================================== //
 
 /* Set message to be send to the monitor port */
 void NaoBehavior::setMonMessage(const std::string& msg) {

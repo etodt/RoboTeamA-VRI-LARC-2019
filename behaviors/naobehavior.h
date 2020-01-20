@@ -84,6 +84,12 @@ protected:
     void preProcessJoints();
     void postProcessJoints();
 
+    virtual VecPosition defaultPosition(){
+		VecPosition target;
+
+		return( target );
+	}
+
     double hoverTime;
     bool mInit;
     bool initBeamed;
@@ -132,7 +138,7 @@ protected:
     // ---------  THESE FUNCTIONS ARE
     // ---------  TO BE OVERRIDEN BY AGENTS...
     virtual SkillType selectSkill();
-    virtual void beam( double& beamX, double& beamY, double& beamAngle );
+    virtual void beam( double& beamX, double& beamY, double& beamAngle ) {}
     virtual void updateFitness() {}
 
     // ----------------------------------------------------
@@ -227,6 +233,7 @@ protected:
     void getSkillsForKickType(int kickType, SkillType skillsForType[]);
 
     SkillType demoKickingCircle();
+    virtual SkillType kickingAndStand();
 
 public:
 
@@ -243,6 +250,54 @@ public:
         return core;
     }
 };
+
+// ==================================================================== //
+
+class Goleiro: public NaoBehavior{
+	public:
+	Goleiro( const std::string teamName, int uNum, const map<string, string>& namedParams_, const string& rsg_ ):NaoBehavior( teamName, uNum, namedParams_, rsg_ ){}
+    VecPosition defaultPosition() override;
+    void beam( double& beamX, double& beamY, double& beamAngle ) override;
+};
+
+// ==================================================================== //
+
+class Zagueiro: public NaoBehavior{
+	public:
+	Zagueiro( const std::string teamName, int uNum, const map<string, string>& namedParams_, const string& rsg_ ):NaoBehavior( teamName, uNum, namedParams_, rsg_ ){}
+    VecPosition defaultPosition() override;
+    void beam( double& beamX, double& beamY, double& beamAngle ) override;
+    
+};
+
+// ==================================================================== //
+
+class Volante: public NaoBehavior{
+	public:
+	Volante( const std::string teamName, int uNum, const map<string, string>& namedParams_, const string& rsg_ ):NaoBehavior( teamName, uNum, namedParams_, rsg_ ){}
+    VecPosition defaultPosition() override;
+    void beam( double& beamX, double& beamY, double& beamAngle ) override;
+};
+
+// ==================================================================== //
+
+class Meia: public NaoBehavior{
+	public:
+	Meia( const std::string teamName, int uNum, const map<string, string>& namedParams_, const string& rsg_ ):NaoBehavior( teamName, uNum, namedParams_, rsg_ ){}
+    VecPosition defaultPosition() override;
+    void beam( double& beamX, double& beamY, double& beamAngle ) override;
+};
+
+// ==================================================================== //
+
+class Atacante: public NaoBehavior{
+	public:
+	Atacante( const std::string teamName, int uNum, const map<string, string>& namedParams_, const string& rsg_ ):NaoBehavior( teamName, uNum, namedParams_, rsg_ ){}
+    VecPosition defaultPosition() override;
+    void beam( double& beamX, double& beamY, double& beamAngle ) override;
+};
+
+// ==================================================================== //
 
 #endif // NAOBEHAVIOR_H
 
