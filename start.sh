@@ -9,7 +9,7 @@ BINARY_DIR="."
 LIBS_DIR="./libs"
 NUM_PLAYERS=11
 
-team="UTAustinVilla_Base"
+team="Capivara"
 host="localhost"
 port=3100
 paramsfile=paramfiles/defaultParams.txt
@@ -111,7 +111,7 @@ for ((i=1;i<=$NUM_PLAYERS;i++)); do
 	    "$BINARY_DIR/$AGENT_BINARY" $opt --unum $i --type 0 --paramsfile paramfiles/defaultParams_t0.txt &#> /dev/null &
 	    #"$BINARY_DIR/$AGENT_BINARY" $opt --unum $i --type 0 --paramsfile paramfiles/defaultParams_t0.txt > stdout$i 2> stderr$i &
 	    ;;
-	3|4)
+	3|4|5|6|7|8)
 	    echo "Running agent No. $i -- Type 1"
 	    "$BINARY_DIR/$AGENT_BINARY" $opt --unum $i --type 1 --paramsfile paramfiles/defaultParams_t1.txt &#>  /dev/null &
 	    #"$BINARY_DIR/$AGENT_BINARY" $opt --unum $i --type 1 --paramsfile paramfiles/defaultParams_t1.txt > stdout$i 2> stderr$i &
